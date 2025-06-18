@@ -28,7 +28,7 @@ foreach (Dificuldade d in difficulty)
     }
 }
 
-CorVermelha();
+Vermelho();
 Console.WriteLine("Dificuldade inválida!");
 ResetaCor();
 
@@ -37,14 +37,60 @@ foreach (Dificuldade d in difficulty)
     if (d.Escolhido == true)
     {
         Console.Clear();
-        Console.WriteLine($"Dificuldade {d.Dif} escolhida");
+        Console.WriteLine($"Dificuldade {d.Dif} escolhida\n");
+        Thread.Sleep(500);
+        Console.Clear();
+        Console.WriteLine("--- Regras ---\n");
+
+        Vermelho();
+        Console.Write("1 ");
+        ResetaCor();
+        Console.Write("para ");
+        Vermelho();
+        Console.Write("Vermelho\n");
+        Verde();
+        Console.Write("2 ");
+        ResetaCor();
+        Console.Write("para ");
+        Verde();
+        Console.Write("Verde\n");
+        Azul();
+        Console.Write("3 ");
+        ResetaCor();
+        Console.Write("para ");
+        Azul();
+        Console.Write("Azul\n");
+        Amarelo();
+        Console.Write("4 ");
+        ResetaCor();
+        Console.Write("para ");
+        Amarelo();
+        Console.Write("Amarelo\n\n");
+        ResetaCor();
+        Console.Write("Aperte 'Enter' para iniciar");
+        Console.ReadLine();
     }
 }
 
 
-void CorVermelha()
+void Vermelho()
 {
     Console.ForegroundColor = ConsoleColor.Red;
+}
+
+void Verde()
+{
+    Console.ForegroundColor = ConsoleColor.Green;
+}
+
+void Azul()
+{
+    Console.ForegroundColor = ConsoleColor.DarkCyan;
+}
+
+void Amarelo()
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
 }
 
 void ResetaCor()

@@ -1,13 +1,13 @@
 ﻿Console.Clear();
 
-int difEscolhida;
+string difEscolhida;
 
 List<Dificuldade> difficulty = new List<Dificuldade>
 {
-    new Dificuldade() {Dif = 1, Rodadas = 8, Escolhido = false},
-    new Dificuldade() {Dif = 2, Rodadas = 14, Escolhido = false},
-    new Dificuldade() {Dif = 3, Rodadas = 20, Escolhido = false},
-    new Dificuldade() {Dif = 4, Rodadas = 31, Escolhido = false}
+    new Dificuldade() {Dif = "1", Rodadas = 8, Escolhido = false},
+    new Dificuldade() {Dif = "2", Rodadas = 14, Escolhido = false},
+    new Dificuldade() {Dif = "3", Rodadas = 20, Escolhido = false},
+    new Dificuldade() {Dif = "4", Rodadas = 31, Escolhido = false}
 };
 
 Console.WriteLine("--- Genius ---");
@@ -18,7 +18,7 @@ foreach (Dificuldade d in difficulty)
 }
 
 Console.Write("\nEscolha a dificuldade que você quer jogar (de 1 à 4): ");
-difEscolhida = Convert.ToInt32(Console.ReadLine()!);
+difEscolhida = Console.ReadLine()!;
 
 foreach (Dificuldade d in difficulty)
 {
@@ -55,7 +55,7 @@ void ResetaCor()
 
 class Dificuldade()
 {
-    public int Dif;
+    public required string Dif;
     public int Rodadas;
     public bool Escolhido;
 }

@@ -58,6 +58,8 @@ foreach (Dificuldade d in difficulty)
 
     menuRegras:
         Console.WriteLine("--- Regras ---\n");
+        Console.WriteLine("Uma sequência de cores irá aparecer, acerte a ordem e passe para a próxima rodada");
+        Console.WriteLine("Digite os números abaixo de acordo com a ordem mostrada com espaço entre cada número\n");
         Vermelho();
         Console.Write("1 ");
         ResetaCor();
@@ -84,8 +86,25 @@ foreach (Dificuldade d in difficulty)
         Console.Write("Amarelo\n\n");
         ResetaCor();
 
-        Console.WriteLine("Deseja ouvir os sons novamente? Pressione 'R'\n");
-        Console.WriteLine("Deseja começar o jogo? Pressione 'Enter'");
+        Console.Write("Exemplo: ");
+        Vermelho();
+        Console.Write("Vermelho ");
+        Amarelo();
+        Console.Write("Amarelo ");
+        Verde();
+        Console.Write("Verde ");
+        ResetaCor();
+        Console.Write(" =>  ");
+        Vermelho();
+        Console.Write("1 ");
+        Amarelo();
+        Console.Write("4 ");
+        Verde();
+        Console.Write("2 \n\n");
+        ResetaCor();
+
+        Console.WriteLine("Pressione 'R' para repetir o áudio");
+        Console.WriteLine("Pressione 'Enter' para começar");
 
         ConsoleKey continuar = Console.ReadKey(true).Key;
 
@@ -121,9 +140,10 @@ foreach (Dificuldade d in difficulty)
 
             if (partes.Length != sequencia.Count)
             {
-                Console.WriteLine("Quantidade de números incorreta! Fim de jogo.");
+                Console.WriteLine("Sequência de números incorreta! Fim de jogo.");
+                Console.WriteLine("A sequência correta era: " + string.Join(" ", sequencia));
                 d.Escolhido = false;
-                break;
+                return;
             }
 
             for (int i = 0; i < sequencia.Count; i++)
@@ -137,20 +157,21 @@ foreach (Dificuldade d in difficulty)
 
             if (!acertou)
             {
-                Console.WriteLine("Sequência incorreta! Fim de jogo.");
+                Console.WriteLine("Sequência de números incorreta! Fim de jogo.");
                 Console.WriteLine("A sequência correta era: " + string.Join(" ", sequencia));
                 d.Escolhido = false;
+                return;
             }
         }
 
         Console.WriteLine("Parabéns, você venceu!");
-        Console.WriteLine("Pressione 'S' para voltar para a página de Dificuldade");
-        Console.WriteLine("Pressione 'Enter' para voltar para a página de Dificuldade");
+        Console.WriteLine("Pressione 'D' para voltar para a página de Dificuldade");
+        Console.WriteLine("Pressione 'Enter' para voltar para finalizar o jogo");
         continuar = Console.ReadKey().Key;
 
         while (continuar != ConsoleKey.Enter)
         {
-            if (continuar == ConsoleKey.S)
+            if (continuar == ConsoleKey.D)
             {
                 Console.Clear();
                 goto menuDificuldade;

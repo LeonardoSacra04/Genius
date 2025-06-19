@@ -1,10 +1,6 @@
-﻿Console.Clear();
+﻿menuDificuldade:
 
-Random randomizar = new Random();
-
-string difEscolhida;
-int RodadasMax;
-int RodadAtual = 1;
+Console.Clear();
 
 List<Dificuldade> difficulty = new List<Dificuldade>
 {
@@ -14,10 +10,19 @@ List<Dificuldade> difficulty = new List<Dificuldade>
     new Dificuldade() {Dif = "4", Rodadas = 31, Escolhido = false}
 };
 
-Queue<string> filaPao = new Queue<string>();
-    filaPao.Enqueue("Anastacia");
-    filaPao.Enqueue("Deodato");
-    filaPao.Enqueue("Madalena");
+string[] partes;
+
+List<int> sequencia = new List<int>();
+Random randomizar = new Random();
+
+int novoNumero;
+int RodadasMax;
+int RodadAtual = 1;
+
+bool acertou = true;
+
+string difEscolhida;
+string entrada;
 
 Console.WriteLine("--- Genius ---");
 
@@ -51,7 +56,7 @@ foreach (Dificuldade d in difficulty)
         Thread.Sleep(1500);
         Console.Clear();
 
-    menuregras:
+    menuRegras:
         Console.WriteLine("--- Regras ---\n");
         Vermelho();
         Console.Write("1 ");
@@ -89,24 +94,72 @@ foreach (Dificuldade d in difficulty)
             if (continuar == ConsoleKey.R)
             {
                 Console.Clear();
-                goto menuregras;
+                goto menuRegras;
             }
             else
             {
                 continuar = Console.ReadKey(true).Key;
             }
         }
-        
-    Jogo:
-        Console.Clear();
-        Console.WriteLine($"Rodada {RodadAtual}\n");
-    
-        if (RodadAtual < RodadasMax)
-        {
-            RodadAtual++;
 
-            goto Jogo;
+        while (d.Escolhido == true)
+        {
+            if (RodadAtual > RodadasMax)
+            {
+                break;
+            }
+
+            novoNumero = randomizar.Next(1, 5);
+            sequencia.Add(novoNumero);
+
+            Console.Clear();
+            Console.WriteLine($"Rodada {RodadAtual}\n");
+            RodadAtual++;
+            Console.WriteLine("A sequência correta era: " + string.Join(" ", sequencia));
+            entrada = Console.ReadLine()!;
+            partes = entrada.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            if (partes.Length != sequencia.Count)
+            {
+                Console.WriteLine("Quantidade de números incorreta! Fim de jogo.");
+                d.Escolhido = false;
+                break;
+            }
+
+            for (int i = 0; i < sequencia.Count; i++)
+            {
+                if (!int.TryParse(partes[i], out int numeroDigitado) || numeroDigitado != sequencia[i])
+                {
+                    acertou = false;
+                    break;
+                }
+            }
+
+            if (!acertou)
+            {
+                Console.WriteLine("Sequência incorreta! Fim de jogo.");
+                Console.WriteLine("A sequência correta era: " + string.Join(" ", sequencia));
+                d.Escolhido = false;
+            }
         }
+
+        Console.WriteLine("Parabéns, você venceu!");
+        Console.WriteLine("Pressione 'S' para voltar para a página de Dificuldade");
+        Console.WriteLine("Pressione 'Enter' para voltar para a página de Dificuldade");
+        continuar = Console.ReadKey().Key;
+
+        while (continuar != ConsoleKey.Enter)
+        {
+            if (continuar == ConsoleKey.S)
+            {
+                Console.Clear();
+                goto menuDificuldade;
+            }
+            else
+            {
+                continuar = Console.ReadKey(true).Key;
+            }
+        }   
     }
 }
 

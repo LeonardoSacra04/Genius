@@ -1,6 +1,10 @@
 ﻿Console.Clear();
 
+Random randomizar = new Random();
+
 string difEscolhida;
+int RodadasMax;
+int RodadAtual = 1;
 
 List<Dificuldade> difficulty = new List<Dificuldade>
 {
@@ -9,6 +13,11 @@ List<Dificuldade> difficulty = new List<Dificuldade>
     new Dificuldade() {Dif = "3", Rodadas = 20, Escolhido = false},
     new Dificuldade() {Dif = "4", Rodadas = 31, Escolhido = false}
 };
+
+Queue<string> filaPao = new Queue<string>();
+    filaPao.Enqueue("Anastacia");
+    filaPao.Enqueue("Deodato");
+    filaPao.Enqueue("Madalena");
 
 Console.WriteLine("--- Genius ---");
 
@@ -29,19 +38,21 @@ foreach (Dificuldade d in difficulty)
 }
 
 Vermelho();
-Console.WriteLine("Dificuldade inválida!");
+Console.WriteLine("Dificuldade inválida");
 ResetaCor();
 
 foreach (Dificuldade d in difficulty)
 {
     if (d.Escolhido == true)
     {
+        RodadasMax = d.Rodadas;
         Console.Clear();
         Console.WriteLine($"Dificuldade {d.Dif} escolhida\n");
-        Thread.Sleep(500);
+        Thread.Sleep(1500);
         Console.Clear();
-        Console.WriteLine("--- Regras ---\n");
 
+    menuregras:
+        Console.WriteLine("--- Regras ---\n");
         Vermelho();
         Console.Write("1 ");
         ResetaCor();
@@ -67,11 +78,37 @@ foreach (Dificuldade d in difficulty)
         Amarelo();
         Console.Write("Amarelo\n\n");
         ResetaCor();
-        Console.Write("Aperte 'Enter' para iniciar");
-        Console.ReadLine();
+
+        Console.WriteLine("Deseja ouvir os sons novamente? Pressione 'R'\n");
+        Console.WriteLine("Deseja começar o jogo? Pressione 'Enter'");
+
+        ConsoleKey continuar = Console.ReadKey(true).Key;
+
+        while (continuar != ConsoleKey.Enter)
+        {
+            if (continuar == ConsoleKey.R)
+            {
+                Console.Clear();
+                goto menuregras;
+            }
+            else
+            {
+                continuar = Console.ReadKey(true).Key;
+            }
+        }
+        
+    Jogo:
+        Console.Clear();
+        Console.WriteLine($"Rodada {RodadAtual}\n");
+    
+        if (RodadAtual < RodadasMax)
+        {
+            RodadAtual++;
+
+            goto Jogo;
+        }
     }
 }
-
 
 void Vermelho()
 {
@@ -98,10 +135,10 @@ void ResetaCor()
     Console.ResetColor();
 }
 
-
 class Dificuldade()
 {
     public required string Dif;
     public int Rodadas;
     public bool Escolhido;
 }
+
